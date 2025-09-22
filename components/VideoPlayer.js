@@ -27,7 +27,7 @@ const VideoPlayer = ({ videoUrl }) => {
   const embedUrl = getEmbedUrl(videoUrl);
 
   return (
-    <div className="video-container mb-6 rounded-lg overflow-hidden shadow-lg">
+    <div className="video-container fade-in">
       {embedUrl.includes('youtube.com') || embedUrl.includes('vimeo.com') ? (
         <iframe
           src={embedUrl}
