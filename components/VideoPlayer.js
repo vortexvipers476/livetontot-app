@@ -27,7 +27,7 @@ const VideoPlayer = ({ videoUrl }) => {
   const embedUrl = getEmbedUrl(videoUrl);
 
   return (
-    <div className="video-container mb-6">
+    <div className="video-container mb-6 rounded-lg overflow-hidden shadow-lg">
       {embedUrl.includes('youtube.com') || embedUrl.includes('vimeo.com') ? (
         <iframe
           src={embedUrl}
@@ -35,6 +35,7 @@ const VideoPlayer = ({ videoUrl }) => {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title="Video Player"
+          className="w-full h-full"
         ></iframe>
       ) : (
         <video
