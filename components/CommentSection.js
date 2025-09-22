@@ -60,16 +60,16 @@ const CommentSection = ({ roomId }) => {
 
   return (
     <div className="comment-section mt-6">
-      <h2 className="text-xl font-bold mb-4">Komentar</h2>
+      <h2 className="text-xl font-bold mb-4 text-gray-800">Komentar</h2>
       
       <form onSubmit={handleAddComment} className="mb-4">
-        <div className="flex mb-2">
+        <div className="flex flex-col sm:flex-row gap-2 mb-2">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Nama Anda"
-            className="flex-1 p-2 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
           <input
@@ -77,30 +77,34 @@ const CommentSection = ({ roomId }) => {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Tambahkan komentar..."
-            className="flex-2 p-2 border-t border-b focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600 transition"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200"
           >
             Kirim
           </button>
         </div>
       </form>
       
-      <div>
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment">
-            <div className="flex justify-between items-start">
-              <div>
-                <span className="comment-username">{comment.username}</span>
-                <span>{comment.text}</span>
+      <div className="space-y-3">
+        {comments.length === 0 ? (
+          <p className="text-gray-500 text-center py-4">Belum ada komentar. Jadilah yang pertama!</p>
+        ) : (
+          comments.map((comment) => (
+            <div key={comment.id} className="comment">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <span className="comment-username">{comment.username}</span>
+                  <p className="text-gray-700 mt-1">{comment.text}</p>
+                </div>
+                <span className="comment-time ml-2 whitespace-nowrap">{formatTime(comment.timestamp)}</span>
               </div>
-              <span className="comment-time">{formatTime(comment.timestamp)}</span>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
