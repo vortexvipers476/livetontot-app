@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 // Halaman utama untuk membuat room baru
 const Home = () => {
@@ -71,87 +72,98 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-        <div className="p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-800 mb-2">Nonton Bareng</h1>
-            <p className="text-gray-600">Buat room untuk nonton bareng dengan teman-teman</p>
-          </div>
-          
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="namaGroup" className="block text-gray-700 font-medium mb-2">
-                Nama Group
-              </label>
-              <input
-                type="text"
-                id="namaGroup"
-                value={namaGroup}
-                onChange={(e) => setNamaGroup(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Masukkan nama group"
-                required
-              />
-            </div>
-            
-            <div className="mb-4">
-              <label htmlFor="film" className="block text-gray-700 font-medium mb-2">
-                Pilih Film
-              </label>
-              <select
-                id="film"
-                value={selectedFilm}
-                onChange={handleFilmChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <Head>
+        <title>Nonton Bareng | Buat Room</title>
+        <meta name="description" content="Buat room untuk nonton bareng dengan teman-teman" />
+      </Head>
+      
+      <div className="max-w-md mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Nonton Bareng</h1>
+          <p className="text-lg text-gray-600">Buat room untuk nonton bareng dengan teman-teman</p>
+        </div>
+        
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="namaGroup" className="block text-sm font-medium text-gray-700 mb-1">
+                  Nama Group
+                </label>
+                <input
+                  type="text"
+                  id="namaGroup"
+                  value={namaGroup}
+                  onChange={(e) => setNamaGroup(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Masukkan nama group"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="film" className="block text-sm font-medium text-gray-700 mb-1">
+                  Pilih Film
+                </label>
+                <select
+                  id="film"
+                  value={selectedFilm}
+                  onChange={handleFilmChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {defaultFilms.map((film, index) => (
+                    <option key={index} value={film.url}>
+                      {film.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label htmlFor="videoUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                  atau Masukkan URL Video Custom
+                </label>
+                <input
+                  type="url"
+                  id="videoUrl"
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="https://example.com/video.mp4"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="maxUsers" className="block text-sm font-medium text-gray-700 mb-1">
+                  Maksimal Jumlah Peserta
+                </label>
+                <input
+                  type="number"
+                  id="maxUsers"
+                  value={maxUsers}
+                  onChange={(e) => setMaxUsers(parseInt(e.target.value))}
+                  min="1"
+                  max="100"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                />
+              </div>
+              
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 px-4 rounded-lg text-white font-medium ${isLoading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} transition duration-200`}
               >
-                {defaultFilms.map((film, index) => (
-                  <option key={index} value={film.url}>
-                    {film.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="mb-4">
-              <label htmlFor="videoUrl" className="block text-gray-700 font-medium mb-2">
-                atau Masukkan URL Video Custom
-              </label>
-              <input
-                type="url"
-                id="videoUrl"
-                value={videoUrl}
-                onChange={(e) => setVideoUrl(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="https://example.com/video.mp4"
-                required
-              />
-            </div>
-            
-            <div className="mb-6">
-              <label htmlFor="maxUsers" className="block text-gray-700 font-medium mb-2">
-                Maksimal Jumlah Peserta
-              </label>
-              <input
-                type="number"
-                id="maxUsers"
-                value={maxUsers}
-                onChange={(e) => setMaxUsers(parseInt(e.target.value))}
-                min="1"
-                max="100"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-            
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            >
-              {isLoading ? 'Membuat Room...' : 'Create Room'}
-            </button>
-          </form>
+                {isLoading ? 'Membuat Room...' : 'Create Room'}
+              </button>
+            </form>
+          </div>
+        </div>
+        
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>Buat room, bagikan link, dan nonton bareng dengan teman-teman!</p>
         </div>
       </div>
     </div>
