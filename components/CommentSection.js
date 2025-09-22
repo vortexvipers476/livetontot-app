@@ -59,17 +59,17 @@ const CommentSection = ({ roomId }) => {
   };
 
   return (
-    <div className="comment-section mt-6">
-      <h2 className="text-xl font-bold mb-4 text-gray-800">Komentar</h2>
+    <div className="comment-section fade-in">
+      <h2 className="text-xl font-bold text-white mb-4">Komentar</h2>
       
-      <form onSubmit={handleAddComment} className="mb-4">
+      <form onSubmit={handleAddComment} className="mb-6">
         <div className="flex flex-col sm:flex-row gap-2 mb-2">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Nama Anda"
-            className="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-3 rounded-lg"
             required
           />
           <input
@@ -77,12 +77,12 @@ const CommentSection = ({ roomId }) => {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Tambahkan komentar..."
-            className="flex-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-2 px-4 py-3 rounded-lg"
             required
           />
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200"
+            className="btn btn-primary"
           >
             Kirim
           </button>
@@ -91,14 +91,19 @@ const CommentSection = ({ roomId }) => {
       
       <div className="space-y-3">
         {comments.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">Belum ada komentar. Jadilah yang pertama!</p>
+          <div className="text-center py-6 text-slate-400">
+            <svg className="mx-auto h-12 w-12 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p className="mt-2">Belum ada komentar. Jadilah yang pertama!</p>
+          </div>
         ) : (
           comments.map((comment) => (
-            <div key={comment.id} className="comment">
+            <div key={comment.id} className="comment fade-in">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <span className="comment-username">{comment.username}</span>
-                  <p className="text-gray-700 mt-1">{comment.text}</p>
+                  <p className="text-slate-300 mt-1">{comment.text}</p>
                 </div>
                 <span className="comment-time ml-2 whitespace-nowrap">{formatTime(comment.timestamp)}</span>
               </div>
